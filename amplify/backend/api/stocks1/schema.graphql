@@ -1,5 +1,45 @@
-type Todo @model {
+type User @model {
   id: ID!
-  name: String!
+  email: String!
   description: String
+  cardInfo: String
+  phoneNumber: String
+  transactions: [Transaction] @connection(keyName: "TransactionsByUser", fields: ["id"])
+  shares: [Share] @connection(keyName: "ShareByUser", fields: ["id"])
+  createdOn: String!
+}
+
+type Transaction @model
+  @key(name: "TransactionsByCompanyByTime", fields: ["companyId", "createdOn"])
+  @key(name: "TransactionsByUser", fields: ["userId", "createdOn"]){ 
+    id: ID!
+    companyId: ID!
+    userId: ID!
+    price: Int!
+    createdOn: String!
+  }
+
+type Share @model
+  @key(name: "ShareByCompanyByListPrice", fields: ["companyId", "listPrice"])
+  @key(name: "ShareByUser", fields: ["userId", "id"]){
+    id: ID!
+    companyId: ID!
+    userId: ID!
+    units: Int!
+    listPrice: Int
+    listUnits: Int
+    createdOn: String!
+  }
+
+type Company @model 
+  @key(name:"byPref", fields: ["preference", "id"]){
+  id: ID!
+  email: String!
+  description: String
+  cardInfo: String
+  phoneNumber: String
+  transactions: [Transaction] @connection(keyName: "TransactionsByCompanyByTime", fields: ["id"])
+  shares: [Share] @connection(keyName: "ShareByCompanyByListPrice", fields: ["id"])
+  createdOn: String!
+  preference: String!
 }
