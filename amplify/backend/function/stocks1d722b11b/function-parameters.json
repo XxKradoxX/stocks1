@@ -1,0 +1,20 @@
+{
+    "permissions": {
+        "api": {
+            "stocks1": [
+                "create",
+                "read",
+                "update",
+                "delete"
+            ]
+        },
+        "auth": {
+            "stocks16fc04c41": [
+                "create",
+                "read",
+                "update",
+                "delete"
+            ]
+        }
+    }
+}

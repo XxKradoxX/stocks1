@@ -24,5 +24,29 @@
 			"dependsOn": [],
 			"customAuth": false
 		}
+	},
+	"function": {
+		"stocks1d722b11b": {
+			"build": true,
+			"providerPlugin": "awscloudformation",
+			"service": "Lambda",
+			"dependsOn": [
+				{
+					"category": "api",
+					"resourceName": "stocks1",
+					"attributes": [
+						"GraphQLAPIIdOutput",
+						"GraphQLAPIEndpointOutput"
+					]
+				},
+				{
+					"category": "auth",
+					"resourceName": "stocks16fc04c41",
+					"attributes": [
+						"UserPoolId"
+					]
+				}
+			]
+		}
 	}
 }

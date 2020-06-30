@@ -25,7 +25,7 @@ export const signupWithEmail = (email, password) => {
             }
         })
         .then(res => {
-            dispatch(changeApiStatus(AUTH_SIGNUP_OK));
+            dispatch(changeApiStatus(AUTH_SIGNUP_OK, null, email));
         })
         .catch(err => {
             console.log(err);

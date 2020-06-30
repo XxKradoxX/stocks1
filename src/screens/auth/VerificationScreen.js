@@ -12,7 +12,7 @@ class VerificationScreen extends Component {
 
     componentDidUpdate() {
         console.log("STATUS")
-
+        console.log(this.props.email);
     }
 
     render() {
