@@ -6,17 +6,17 @@ type User @model {
   phoneNumber: String
   transactions: [Transaction] @connection(keyName: "TransactionsByUser", fields: ["id"])
   shares: [Share] @connection(keyName: "ShareByUser", fields: ["id"])
-  createdOn: String!
+  createdAt: AWSDateTime
 }
 
 type Transaction @model
-  @key(name: "TransactionsByCompanyByTime", fields: ["companyId", "createdOn"])
-  @key(name: "TransactionsByUser", fields: ["userId", "createdOn"]){ 
+  @key(name: "TransactionsByCompanyByTime", fields: ["companyId", "createdAt"])
+  @key(name: "TransactionsByUser", fields: ["userId", "createdAt"]){ 
     id: ID!
     companyId: ID!
     userId: ID!
     price: Int!
-    createdOn: String!
+    createdAt: AWSDateTime
   }
 
 type Share @model
@@ -28,7 +28,7 @@ type Share @model
     units: Int!
     listPrice: Int
     listUnits: Int
-    createdOn: String!
+    createdAt: AWSDateTime
   }
 
 type Company @model 
@@ -40,6 +40,6 @@ type Company @model
   phoneNumber: String
   transactions: [Transaction] @connection(keyName: "TransactionsByCompanyByTime", fields: ["id"])
   shares: [Share] @connection(keyName: "ShareByCompanyByListPrice", fields: ["id"])
-  createdOn: String!
   preference: String!
+  createdAt: AWSDateTime
 }
