@@ -1,4 +1,13 @@
-import { AUTH_SIGNUP_REQUESTED, AUTH_SIGNUP_FAILED, AUTH_SIGNUP_OK, AUTH_LOGIN_REQUESTED, AUTH_VERIFICATION_REQUESTED, AUTH_VERIFICATION_OK, AUTH_VERIFICATION_FAILED } from './types'
+import { 
+    AUTH_SIGNUP_REQUESTED, 
+    AUTH_SIGNUP_FAILED, 
+    AUTH_SIGNUP_OK, 
+    AUTH_LOGIN_REQUESTED, 
+    AUTH_LOGIN_OK,
+    AUTH_LOGIN_FAILED,
+    AUTH_VERIFICATION_REQUESTED, 
+    AUTH_VERIFICATION_OK, 
+    AUTH_VERIFICATION_FAILED } from './types'
 import { Auth } from 'aws-amplify';
 
 export const changeApiStatus = ( status, err=null, res=null) => {
@@ -42,15 +51,14 @@ export const signupWithEmail = (email, password) => {
 export const loginWithEmail = (email, password) => {
     email = email.toLowerCase();
     return dispatch => {
-        dispatch(() => changeApiStatus(AUTH_LOGIN_REQUESTED));
+        dispatch(changeApiStatus(AUTH_LOGIN_REQUESTED));
         Auth.signIn(email, password)
         .then(res => {
-            console.log("loginWithEmail");
-            console.log(res);
+            dispatch(changeApiStatus(AUTH_LOGIN_OK, null, res.attributes.email));
         })
         .catch(err => {
             if (err.code == "UserNotFoundException") {
-                dispatch(() => changeApiStatus(AUTH_SIGNUP_FAILED, err.message));
+                dispatch(changeApiStatus(AUTH_LOGIN_FAILED, err.message));
             } 
             console.log("loginWithEmail Error");
             console.log(err)

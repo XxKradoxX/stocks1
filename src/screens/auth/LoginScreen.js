@@ -10,16 +10,15 @@ import { Formik } from 'formik';
 class SignupScreen extends Component {
 
     componentDidUpdate() {
-        console.log("componentDidUpdate")
-        console.log(this.props.status);
+        console.log("login componentDidUpdate");
     }
 
     render() {
         return(
             <View style={styles.container} >
                 <Formik
-                initialValues={{ email: '', password: '' }}
-                onSubmit={ values => this.props.loginWithEmail(values.email, values.password) } >
+                initialValues={{ email: 'kent.jonathan.utomo@gmail.com', password: 'Kutomo234' }}
+                onSubmit={ values => {console.log(values);this.props.loginWithEmail(values.email, values.password);} } >
                     {({ handleChange, handleBlur, handleSubmit, values }) => (
                     <View>
                         <View>

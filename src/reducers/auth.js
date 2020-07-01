@@ -32,7 +32,7 @@ export default (state = INITIAL_STATE, action) => {
         case AUTH_LOGIN_REQUESTED: 
             return { ...state, status: action.type }
         case AUTH_LOGIN_OK:
-            return { ...state, status: null, err: null, user: action.payload }
+            return { ...state, status: null, err: null, email: action.payload, isVerified: true }
         case AUTH_LOGIN_FAILED:
             return { ...state, status: null, err: action.payload }
         // VERIFICATION
