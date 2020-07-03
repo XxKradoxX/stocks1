@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, Button, TextInput, } from 'react-native';
 
-import { loginWithEmail } from '../../actions/';
+import { loginWithEmail } from '../../actions/auth';
 
 import { connect } from 'react-redux';
 

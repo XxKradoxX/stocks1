@@ -2,13 +2,12 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View, Button, TextInput, } from 'react-native';
 
 import { connect } from 'react-redux';
-import { getCompany } from '../../actions';
+import { getCompany } from '../../actions/stocks';
 
 import { Dimensions } from "react-native";
 const screenWidth = Dimensions.get("window").width;
 
 import { LineChart } from "react-native-chart-kit";
-
 
 const data = {
     labels: ["January", "February", "March", "April", "May", "June"],
@@ -32,9 +31,8 @@ const data = {
 
 class StockScreen extends Component {
 
-  constructor() {
-    super();
-    //this.props.getCompany("tsla");
+  componentDidMount() {
+    this.props.getCompany("tsla");
   }
 
     render() {
@@ -68,8 +66,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-
-    }
-}   
+    rand : 'sasd'
+    };
+};
 
 export default connect(mapStateToProps, { getCompany })(StockScreen);

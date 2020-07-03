@@ -1,34 +1,304 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateTodo = /* GraphQL */ `
-  subscription OnCreateTodo {
-    onCreateTodo {
+export const onCreateUser = /* GraphQL */ `
+  subscription OnCreateUser {
+    onCreateUser {
       id
-      name
+      email
       description
+      cardInfo
+      phoneNumber
+      transactions {
+        items {
+          id
+          companyId
+          userId
+          price
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      shares {
+        items {
+          id
+          companyId
+          userId
+          units
+          listPrice
+          listUnits
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
   }
 `;
-export const onUpdateTodo = /* GraphQL */ `
-  subscription OnUpdateTodo {
-    onUpdateTodo {
+export const onUpdateUser = /* GraphQL */ `
+  subscription OnUpdateUser {
+    onUpdateUser {
       id
-      name
+      email
       description
+      cardInfo
+      phoneNumber
+      transactions {
+        items {
+          id
+          companyId
+          userId
+          price
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      shares {
+        items {
+          id
+          companyId
+          userId
+          units
+          listPrice
+          listUnits
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
   }
 `;
-export const onDeleteTodo = /* GraphQL */ `
-  subscription OnDeleteTodo {
-    onDeleteTodo {
+export const onDeleteUser = /* GraphQL */ `
+  subscription OnDeleteUser {
+    onDeleteUser {
       id
-      name
+      email
       description
+      cardInfo
+      phoneNumber
+      transactions {
+        items {
+          id
+          companyId
+          userId
+          price
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      shares {
+        items {
+          id
+          companyId
+          userId
+          units
+          listPrice
+          listUnits
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateTransaction = /* GraphQL */ `
+  subscription OnCreateTransaction {
+    onCreateTransaction {
+      id
+      companyId
+      userId
+      price
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateTransaction = /* GraphQL */ `
+  subscription OnUpdateTransaction {
+    onUpdateTransaction {
+      id
+      companyId
+      userId
+      price
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteTransaction = /* GraphQL */ `
+  subscription OnDeleteTransaction {
+    onDeleteTransaction {
+      id
+      companyId
+      userId
+      price
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateShare = /* GraphQL */ `
+  subscription OnCreateShare {
+    onCreateShare {
+      id
+      companyId
+      userId
+      units
+      listPrice
+      listUnits
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateShare = /* GraphQL */ `
+  subscription OnUpdateShare {
+    onUpdateShare {
+      id
+      companyId
+      userId
+      units
+      listPrice
+      listUnits
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteShare = /* GraphQL */ `
+  subscription OnDeleteShare {
+    onDeleteShare {
+      id
+      companyId
+      userId
+      units
+      listPrice
+      listUnits
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateCompany = /* GraphQL */ `
+  subscription OnCreateCompany {
+    onCreateCompany {
+      id
+      email
+      description
+      cardInfo
+      phoneNumber
+      transactions {
+        items {
+          id
+          companyId
+          userId
+          price
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      shares {
+        items {
+          id
+          companyId
+          userId
+          units
+          listPrice
+          listUnits
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      preference
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateCompany = /* GraphQL */ `
+  subscription OnUpdateCompany {
+    onUpdateCompany {
+      id
+      email
+      description
+      cardInfo
+      phoneNumber
+      transactions {
+        items {
+          id
+          companyId
+          userId
+          price
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      shares {
+        items {
+          id
+          companyId
+          userId
+          units
+          listPrice
+          listUnits
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      preference
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteCompany = /* GraphQL */ `
+  subscription OnDeleteCompany {
+    onDeleteCompany {
+      id
+      email
+      description
+      cardInfo
+      phoneNumber
+      transactions {
+        items {
+          id
+          companyId
+          userId
+          price
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      shares {
+        items {
+          id
+          companyId
+          userId
+          units
+          listPrice
+          listUnits
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      preference
       createdAt
       updatedAt
     }

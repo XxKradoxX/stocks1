@@ -10,6 +10,6 @@ export const AUTH_VERIFICATION_OK               = "AUTH_VERIFICATION_OK"
 export const AUTH_VERIFICATION_FAILED           = "AUTH_VERIFICATION_FAILED"
 
 // STOCKS
-export const STOCK_COMPANY_REQUESTED            = "STOCK_COMPANY_REQUESTED"
-export const STOCK_COMPANY_OK                   = "STOCK_COMPANY_OK"
-export const STOCK_COMPANY_FAILED               = "STOCK_COMPANY_FAILED"
+export const STOCKS_COMPANY_REQUESTED            = "STOCK_COMPANY_REQUESTED"
+export const STOCKS_COMPANY_OK                   = "STOCK_COMPANY_OK"
+export const STOCKS_COMPANY_FAILED               = "STOCK_COMPANY_FAILED"

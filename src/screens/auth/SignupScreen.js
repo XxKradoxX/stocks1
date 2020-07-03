@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, Button, TextInput, } from 'react-native';
 
-import { signupWithEmail } from '../../actions/';
+import { signupWithEmail } from '../../actions/auth';
 
 import { connect } from 'react-redux';
 
 import { Formik } from 'formik';
-import { AUTH_SIGNUP_OK } from "../../actions/types";
 
 class SignupScreen extends Component {
 

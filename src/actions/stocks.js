@@ -1,9 +1,10 @@
-// import {
-//     STOCKS_COMPANY_REQUESTED,   
-// } from './types'
+import {
+    STOCKS_COMPANY_REQUESTED,   
+} from './types'
 
-// import { API, graphqlOperation } from "@aws-amplify/api";
-// import { GetCompany } from '../graphql/queries';
+import { API, graphqlOperation } from "@aws-amplify/api";
+import { getCompanyQuery } from '../graphql/queries';
+
 export const changeApiStatus = ( status, err=null, res=null) => {
     if (err) {
         return { type: status, payload: err};
@@ -16,15 +17,16 @@ export const changeApiStatus = ( status, err=null, res=null) => {
     return { type: status };
 }
 
-// export const getCompany = companyId => {
-//     return dispatch => {
-//         //dispatch(changeApiStatus(STOCKS_COMPANY_REQUESTED));
-//         // API.graphql(graphqlOperation(GetCompany, { id: companyId }))
-//         // .then(res => {
-//         //     console.log(res);
-//         // })
-//         // .catch(err => {
-//         //     console.log(err);
-//         // });
-//     }
-// };
+export const getCompany = companyId => {
+    console.log("getCompany");
+    return dispatch => {
+        dispatch(changeApiStatus(STOCKS_COMPANY_REQUESTED));
+        API.graphql(graphqlOperation(getCompanyQuery, { id: companyId }))
+        .then(res => {
+            console.log(res);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
+};

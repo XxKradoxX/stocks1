@@ -69,7 +69,7 @@ export const loginWithEmail = (email, password) => {
 export const verifyAccount = (email, code) => {
     email = email.toLowerCase();
     return dispatch => {
-        dispatch(() => changeApiStatus(AUTH_VERIFICATION_REQUESTED));
+        dispatch(changeApiStatus(AUTH_VERIFICATION_REQUESTED));
         Auth.confirmSignUp(email, code)
         .then(res => {
             console.log(res);

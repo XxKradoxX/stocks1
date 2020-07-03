@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, Button, TextInput, } from 'react-native';
 
-import { verifyAccount } from '../../actions/';
+import { verifyAccount } from '../../actions/auth';
 
 import { connect } from 'react-redux';
 
 import { Formik } from 'formik';
-import { AUTH_SIGNUP_OK } from "../../actions/types";
 
 class VerificationScreen extends Component {
 
