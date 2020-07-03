@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        email: state.auth.user,
+        email: state.auth.email,
         status: state.auth.status,
         err: state.auth.err,
     }

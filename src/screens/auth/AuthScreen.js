@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from 'react-native';
 
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator } from '@react-navigation/stack';
+import { StackActions, NavigationActions } from 'react-navigation';
+import { CommonActions } from '@react-navigation/native';
+
+
 import { connect } from 'react-redux';
-;
 
 import LoginScreen from './LoginScreen';
 import SignupScreen from './SignupScreen';
@@ -13,6 +16,18 @@ import VerificationScreen from './VerificationScreen'
 const Stack = createStackNavigator();
 
 class AuthScreen extends Component {
+
+    componentDidUpdate() {      
+        console.log();
+        if (this.props.isVerified == true && this.props.email != null) {
+            this.props.navigation.dispatch(
+                CommonActions.reset({
+                    index: 0,
+                    routes: [{ name: 'Main' }]
+                })
+            );
+        }
+    }
 
     render() {
         return(
@@ -35,11 +50,11 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        user: state.auth.user,
+        email: state.auth.email,
         status: state.auth.status,
         err: state.auth.err,
+        isVerified: state.auth.isVerified,
     };
 }
 
-// export default connect(null, {  })(AuthScreen);
-export default AuthScreen
+export default connect(mapStateToProps, {  })(AuthScreen);

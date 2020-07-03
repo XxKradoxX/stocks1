@@ -8,7 +8,7 @@ import reducers from './src/reducers/index';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AuthScreen from './src/screens/auth/AuthScreen';
-
+import MainScreen from './src/screens/main/MainScreen';
 
 const Stack = createStackNavigator();
 
@@ -17,7 +17,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
-}
+  }
 
   render() {
     return (
@@ -25,6 +25,7 @@ class App extends Component {
         <NavigationContainer>
           <Stack.Navigator screenOptions={{headerShown: false}}>
             <Stack.Screen name="Auth" component={AuthScreen} />
+            <Stack.Screen name="Main" component={MainScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>  

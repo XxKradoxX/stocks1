@@ -6,7 +6,6 @@ import { signupWithEmail } from '../../actions/';
 import { connect } from 'react-redux';
 
 import { Formik } from 'formik';
-import { AUTH_SIGNUP_OK } from "../../actions/types";
 
 class SignupScreen extends Component {
 
