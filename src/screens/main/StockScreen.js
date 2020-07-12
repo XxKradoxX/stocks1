@@ -19,7 +19,8 @@ import moment from 'moment';
 import 'moment-timezone';
 
 let chartData = [];
-
+let chartDataLastRealIndex = 0;
+let timeOut = 200;
 let localTransactions = [];
 const contentInset = { top: 20, bottom: 20 }
 const isWithinInc = (a, b, inc) => { 
@@ -27,31 +28,30 @@ const isWithinInc = (a, b, inc) => {
 }
 
 const fill = (nextClosingTransaction, previousClosingTransaction, inc) => { // Fills (gap between previous and new Closing Transactions) + (nextClosingTransaction)
-  let     t = previousClosingTransaction.momentCreatedAt;
+  
+  let t = previousClosingTransaction.momentCreatedAt.clone();
   let currentClosingPricePerUnit = previousClosingTransaction.price/previousClosingTransaction.units;
+  
   if (nextClosingTransaction == null) {
-    const numIncs = Math.floor(moment().diff(t)/inc)
+    const numIncs = Math.floor(moment().diff(t)/inc);
+    const ix = chartData.length-1;
     for (let i = 0; i < numIncs; i++) {
+      
       chartData.push(currentClosingPricePerUnit);
     }
-    return;
+    return ix;
   }
-  
-  console.log("fill ===================");
-  console.log("nextClosingTransaction: ", nextClosingTransaction);
-  console.log("previousClosingTransaction: ", previousClosingTransaction);
-  console.log("moment(nextClosingTransaction.createdAt).diff(t): ", moment(nextClosingTransaction.createdAt).diff(t));
-  const   numIncs = Math.abs(Math.floor(moment(nextClosingTransaction.createdAt).diff(t)/inc)); // Floor and abs just in case
-  const   finalClosingTransactionPerUnit = nextClosingTransaction.price/nextClosingTransaction.units;
-  let   gradient = (finalClosingTransactionPerUnit-currentClosingPricePerUnit)/numIncs;
-  gradient = isNaN(gradient) ? 0 : gradient;
-  console.log("gradient: ", gradient);
-  console.log("numIncs: ", numIncs);
-  // console.log("t: ", t);
-  // console.log("numIncs: ", numIncs);
-  // console.log("currentClosingPricePerUnit: ", currentClosingPricePerUnit);
-  // console.log("finalClosingTransactionPerUnit: ", finalClosingTransactionPerUnit);
-  // console.log("gradient: ", gradient);
+
+  const numIncs = Math.abs(Math.floor(moment(nextClosingTransaction.createdAt).diff(t)/inc)); // Floor and abs just in case
+  const finalClosingTransactionPerUnit = nextClosingTransaction.price/nextClosingTransaction.units;
+  let gradient = null
+  if (currentClosingPricePerUnit == 0) {
+    gradient=0;
+  } else {
+    gradient = (finalClosingTransactionPerUnit-currentClosingPricePerUnit)/numIncs;
+    gradient = isNaN(gradient) ? 0 : gradient;
+  }
+
   for (let i = 0; i < numIncs; i++) {
     currentClosingPricePerUnit += gradient;
     chartData.push(currentClosingPricePerUnit);
@@ -65,6 +65,10 @@ const transactionsToChartData = ( oldTransactions, newTransactions, gt ) => {
   // 1m: 1/8h ~ 93 pts
   // 6m: 1/2d ~ 93 pts
   // 1y: 1/2d ~ 186 pts 
+
+  if (chartData.length > 0) {
+    chartData.splice(chartDataLastRealIndex+1, chartData.length - (chartDataLastRealIndex+1));
+  }
 
   let previousClosingTransaction = null;
   let i = 0;
@@ -90,7 +94,7 @@ const transactionsToChartData = ( oldTransactions, newTransactions, gt ) => {
     }
   } 
   else 
-  {
+  {    
     i = oldTransactions.length-1;
     previousClosingTransaction = {
       momentCreatedAt: moment(oldTransactions[i].createdAt),
@@ -113,27 +117,20 @@ const transactionsToChartData = ( oldTransactions, newTransactions, gt ) => {
       break;
     }
     case "years": {
-      console.log("fuck");
       inc = 1000 * 60 * 60 * 24 * 2; // 2 days in ms
       break;
     }
   }
-  console.log("inc: ", moment.duration(inc, "millisecond").asDays());
-  console.log("i: ", i);
   let priceChanged = false;
   while (i < newTransactions.length) // Group transactions to increments and finds closing Transaction for each group
   {
     i++;
-    console.log();
     while (i < newTransactions.length && isWithinInc(previousClosingTransaction.momentCreatedAt, moment(newTransactions[i].createdAt), inc)) // Find closing transaction for current increment
     { 
       priceChanged = true;
       i++;
     }
     const safeIndex = i < newTransactions.length ? i : i-1;
-    // console.log("safeIndex: ", safeIndex);
-    // console.log("newTransactions[safeIndex]: ", newTransactions[safeIndex]);
-    // console.log("previousClosingTransaction: ", previousClosingTransaction.momentCreatedAt.toISOString());
     const nextClosingTime = fill(newTransactions[safeIndex], previousClosingTransaction, inc); // Fills gaps between previous and new Closing transactions
     previousClosingTransaction = { // Update previous Closing Transaction
       momentCreatedAt: nextClosingTime,
@@ -142,8 +139,9 @@ const transactionsToChartData = ( oldTransactions, newTransactions, gt ) => {
     } 
   }
   if (!priceChanged) { // In case price is completely stagnant
-    fill(null, previousClosingTransaction, inc);
+    chartDataLastRealIndex = fill(null, previousClosingTransaction, inc);
   }
+  localTransactions = newTransactions.slice(); //CAUSE OF ERROR
 }
 
 class StockScreen extends Component {
@@ -152,13 +150,31 @@ class StockScreen extends Component {
     // Display Loading
     // this.props.getCompany("tsla");
     this.props.listTransactionsByCompany("tsla", { quantity: 1, units: 'months' });
-    // console.log("userId: ", this.props.userId);
     //this.props.listTransactionsByUser(this.props.userId, "tsla");
+
+    this.interval = setInterval(
+    () => {
+      timeOut--;
+      if (this.props.currentTransactions.length > 0) {
+        this.props.listTransactionsByCompany("tsla", null, this.props.currentTransactions[this.props.currentTransactions.length-1].createdAt);
+      }
+
+      if (timeOut == 0) {
+        clearInterval(this.interval);
+      }
+      
+    },
+    5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   render() {
     if (this.props.gt != null) {
       transactionsToChartData(localTransactions, this.props.currentTransactions, this.props.gt);
+      
       console.log(chartData);
     }
 

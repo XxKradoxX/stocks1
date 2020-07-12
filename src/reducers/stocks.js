@@ -6,6 +6,7 @@ import {
     STOCKS_TRANSACTIONS_BY_COMPANY_REQUESTED,
     STOCKS_TRANSACTIONS_BY_COMPANY_OK,
     STOCKS_TRANSACTIONS_BY_COMPANY_FAILED,
+    STOCKS_TRANSACTIONS_BY_COMPANY_UPDATED_OK,
     STOCKS_TRANSACTIONS_BY_USER_REQUESTED,
     STOCKS_TRANSACTIONS_BY_USER_OK,
     STOCKS_TRANSACTIONS_BY_USER_FAILED
@@ -50,6 +51,7 @@ const renewMyTransactions = ( state, newTransactions ) => {
 }
 
 export default (state = INITIAL_STATE, action) => {
+    console.log("action.type: ", action);
     switch(action.type) {
         case STOCKS_COMPANY_REQUESTED:
             return { ...state, status: action.payload, err: null }
@@ -61,8 +63,6 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, status: action.payload, err: null }
         case STOCKS_TRANSACTIONS_BY_COMPANY_OK:
         {
-            console.log(STOCKS_TRANSACTIONS_BY_COMPANY_OK);
-            console.log(action.payload.transactions);
             return { 
                 ...state, 
                 status: null, 
@@ -74,12 +74,20 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, status: null, err: action.payload }
         case STOCKS_TRANSACTIONS_BY_USER_REQUESTED: 
             return { ...state, status: action.payload, err: null }
-        case STOCKS_TRANSACTIONS_BY_USER_OK: {
-            console.log(action.payload);
+        case STOCKS_TRANSACTIONS_BY_USER_OK: 
             return { ...state, status: null, myTransactions: renewMyTransactions(state, action.payload) }
-        }
         case STOCKS_TRANSACTIONS_BY_USER_FAILED:
             return { ...state, status: action.payload, err: null }
+        case STOCKS_TRANSACTIONS_BY_COMPANY_UPDATED_OK: {
+            console.log(STOCKS_TRANSACTIONS_BY_COMPANY_UPDATED_OK);
+            return { 
+                ...state, 
+                status: null, 
+                currentTransactions: [ ...state.currentTransactions, ...action.payload.transactions], 
+            }
+            break;
+        }
+
         default:
             return state;
     }

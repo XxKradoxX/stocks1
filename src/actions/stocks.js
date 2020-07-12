@@ -6,6 +6,7 @@ import {
     STOCKS_TRANSACTIONS_BY_COMPANY_REQUESTED,
     STOCKS_TRANSACTIONS_BY_COMPANY_OK,
     STOCKS_TRANSACTIONS_BY_COMPANY_FAILED,
+    STOCKS_TRANSACTIONS_BY_COMPANY_UPDATED_OK,
     STOCKS_TRANSACTIONS_BY_USER_REQUESTED,
     STOCKS_TRANSACTIONS_BY_USER_OK,
     STOCKS_TRANSACTIONS_BY_USER_FAILED,
@@ -49,33 +50,57 @@ export const getCompany = ( companyId ) => {
     }
 };
 
-export const listTransactionsByCompany = ( id, gt ) => {
+export const listTransactionsByCompany = ( id, gt, lastTransactionDateString=null ) => {
+    console.log("lastTransactionDateString: ", lastTransactionDateString);
     return dispatch => {
         dispatch(changeApiStatus(STOCKS_TRANSACTIONS_BY_COMPANY_REQUESTED));
-        API.graphql(graphqlOperation(listTransactionsByCompanyQuery, 
-        { 
-            id: id, 
-            gt: gt ? moment().subtract(gt.quantity, gt.units).toISOString() : moment(0).toISOString()
-        }))
-        .then(res => {
-            //console.log(res.data.getCompany.transactions.items);
-            // console.log("moment test: ", moment("2020-07-03T11:17:51.30Z").toString());
-            // for (let i = 0; i < res.data.getCompany.transactions.items.length; i++) {
-            //     if (res.data.getCompany.transactions.items[i].createdAt.length == 24) {
-            //         res.data.getCompany.transactions.items[i].createdAt = res.data.getCompany.transactions.items[i].createdAt.substring(0, 22) + res.data.getCompany.transactions.items[i].createdAt.substring(23);
-            //     }
-            // }
-            dispatch(changeApiStatus(STOCKS_TRANSACTIONS_BY_COMPANY_OK, 
-            null,
+        if (lastTransactionDateString) {
+            console.log("Refreshing Transactions...");
+            API.graphql(graphqlOperation(listTransactionsByCompanyQuery, 
             { 
-                transactions: res.data.getCompany.transactions.items, 
-                gt: { quantity: gt.quantity, units: gt.units } 
-            }));
-        })
-        .catch(err => {
-            console.log(err);
-            dispatch(changeApiStatus(STOCKS_TRANSACTIONS_BY_COMPANY_FAILED, err))
-        });
+                id: id, 
+                gt: lastTransactionDateString
+            }))
+            .then(res => {
+                if (res.data.getCompany.transactions.items.length > 0) {
+                    dispatch(changeApiStatus(STOCKS_TRANSACTIONS_BY_COMPANY_UPDATED_OK, 
+                    null,
+                    { 
+                        transactions: res.data.getCompany.transactions.items, 
+                    }));
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                dispatch(changeApiStatus(STOCKS_TRANSACTIONS_BY_COMPANY_FAILED, err))
+            });
+        } else {
+            API.graphql(graphqlOperation(listTransactionsByCompanyQuery, 
+            { 
+                id: id, 
+                gt: gt ? moment().subtract(gt.quantity, gt.units).toISOString() : moment(0).toISOString()
+            }))
+            .then(res => {
+                //console.log(res.data.getCompany.transactions.items);
+                // console.log("moment test: ", moment("2020-07-03T11:17:51.30Z").toString());
+                // for (let i = 0; i < res.data.getCompany.transactions.items.length; i++) {
+                //     if (res.data.getCompany.transactions.items[i].createdAt.length == 24) {
+                //         res.data.getCompany.transactions.items[i].createdAt = res.data.getCompany.transactions.items[i].createdAt.substring(0, 22) + res.data.getCompany.transactions.items[i].createdAt.substring(23);
+                //     }
+                // }
+                dispatch(changeApiStatus(STOCKS_TRANSACTIONS_BY_COMPANY_OK, 
+                null,
+                { 
+                    transactions: res.data.getCompany.transactions.items, 
+                    gt: { quantity: gt.quantity, units: gt.units } 
+                }));
+            })
+            .catch(err => {
+                console.log(err);
+                dispatch(changeApiStatus(STOCKS_TRANSACTIONS_BY_COMPANY_FAILED, err))
+            });
+        }
+        
     };
 }
 
