@@ -9,10 +9,6 @@ import { Formik } from 'formik';
 
 class SignupScreen extends Component {
 
-    componentDidUpdate() {
-        console.log("login componentDidUpdate");
-    }
-
     render() {
         return(
             <View style={styles.container} >

@@ -15,6 +15,7 @@ export const onCreateUser = /* GraphQL */ `
           companyId
           userId
           price
+          units
           createdAt
           updatedAt
         }
@@ -52,6 +53,7 @@ export const onUpdateUser = /* GraphQL */ `
           companyId
           userId
           price
+          units
           createdAt
           updatedAt
         }
@@ -89,6 +91,7 @@ export const onDeleteUser = /* GraphQL */ `
           companyId
           userId
           price
+          units
           createdAt
           updatedAt
         }
@@ -119,6 +122,7 @@ export const onCreateTransaction = /* GraphQL */ `
       companyId
       userId
       price
+      units
       createdAt
       updatedAt
     }
@@ -131,6 +135,7 @@ export const onUpdateTransaction = /* GraphQL */ `
       companyId
       userId
       price
+      units
       createdAt
       updatedAt
     }
@@ -143,6 +148,7 @@ export const onDeleteTransaction = /* GraphQL */ `
       companyId
       userId
       price
+      units
       createdAt
       updatedAt
     }
@@ -204,6 +210,7 @@ export const onCreateCompany = /* GraphQL */ `
           companyId
           userId
           price
+          units
           createdAt
           updatedAt
         }
@@ -242,6 +249,7 @@ export const onUpdateCompany = /* GraphQL */ `
           companyId
           userId
           price
+          units
           createdAt
           updatedAt
         }
@@ -280,6 +288,7 @@ export const onDeleteCompany = /* GraphQL */ `
           companyId
           userId
           price
+          units
           createdAt
           updatedAt
         }

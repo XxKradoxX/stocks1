@@ -1,6 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
-// USER
+
 export const createUser = /* GraphQL */ `
   mutation CreateUser(
     $input: CreateUserInput!
@@ -18,6 +18,7 @@ export const createUser = /* GraphQL */ `
           companyId
           userId
           price
+          units
           createdAt
           updatedAt
         }
@@ -58,6 +59,7 @@ export const updateUser = /* GraphQL */ `
           companyId
           userId
           price
+          units
           createdAt
           updatedAt
         }
@@ -98,6 +100,7 @@ export const deleteUser = /* GraphQL */ `
           companyId
           userId
           price
+          units
           createdAt
           updatedAt
         }
@@ -121,8 +124,6 @@ export const deleteUser = /* GraphQL */ `
     }
   }
 `;
-
-// TRANSACTION
 export const createTransaction = /* GraphQL */ `
   mutation CreateTransaction(
     $input: CreateTransactionInput!
@@ -133,6 +134,7 @@ export const createTransaction = /* GraphQL */ `
       companyId
       userId
       price
+      units
       createdAt
       updatedAt
     }
@@ -148,6 +150,7 @@ export const updateTransaction = /* GraphQL */ `
       companyId
       userId
       price
+      units
       createdAt
       updatedAt
     }
@@ -163,13 +166,12 @@ export const deleteTransaction = /* GraphQL */ `
       companyId
       userId
       price
+      units
       createdAt
       updatedAt
     }
   }
 `;
-
-// SHARE
 export const createShare = /* GraphQL */ `
   mutation CreateShare(
     $input: CreateShareInput!
@@ -221,8 +223,6 @@ export const deleteShare = /* GraphQL */ `
     }
   }
 `;
-
-// COMPANY
 export const createCompany = /* GraphQL */ `
   mutation CreateCompany(
     $input: CreateCompanyInput!
@@ -240,6 +240,7 @@ export const createCompany = /* GraphQL */ `
           companyId
           userId
           price
+          units
           createdAt
           updatedAt
         }
@@ -281,6 +282,7 @@ export const updateCompany = /* GraphQL */ `
           companyId
           userId
           price
+          units
           createdAt
           updatedAt
         }
@@ -322,6 +324,7 @@ export const deleteCompany = /* GraphQL */ `
           companyId
           userId
           price
+          units
           createdAt
           updatedAt
         }

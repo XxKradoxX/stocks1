@@ -24,7 +24,6 @@ export default (state = INITIAL_STATE, action) => {
         case AUTH_SIGNUP_REQUESTED: 
             return { ...state, status: action.type }
         case AUTH_SIGNUP_OK: 
-            console.log(AUTH_SIGNUP_OK);
             return { ...state, status: null, err: null, email: action.payload, isVerified: false }
         case AUTH_SIGNUP_FAILED:
             return { ...state, status: null, err: action.payload }
@@ -32,7 +31,14 @@ export default (state = INITIAL_STATE, action) => {
         case AUTH_LOGIN_REQUESTED: 
             return { ...state, status: action.type }
         case AUTH_LOGIN_OK:
-            return { ...state, status: null, err: null, email: action.payload, isVerified: true }
+            return { 
+                ...state, 
+                status: null, 
+                err: null, 
+                email: action.payload.email, 
+                id:action.payload.id , 
+                isVerified: true
+            }
         case AUTH_LOGIN_FAILED:
             return { ...state, status: null, err: action.payload }
         // VERIFICATION

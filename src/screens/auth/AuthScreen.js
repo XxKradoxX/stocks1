@@ -21,7 +21,6 @@ class AuthScreen extends Component {
     componentDidUpdate() {      
         console.log();
         if (this.props.isVerified == true && this.props.email != null) {
-            console.log("Auth componentDidUpdate");
             this.props.navigation.dispatch(
                 CommonActions.reset({
                     index: 0,

@@ -1,7 +1,7 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getUser = /* GraphQL */ `
+export const getUseQuery = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
       id
@@ -15,6 +15,7 @@ export const getUser = /* GraphQL */ `
           companyId
           userId
           price
+          units
           createdAt
           updatedAt
         }
@@ -38,7 +39,7 @@ export const getUser = /* GraphQL */ `
     }
   }
 `;
-export const listUsers = /* GraphQL */ `
+export const listUsersQuery = /* GraphQL */ `
   query ListUsers(
     $filter: ModelUserFilterInput
     $limit: Int
@@ -64,38 +65,58 @@ export const listUsers = /* GraphQL */ `
     }
   }
 `;
-export const getTransaction = /* GraphQL */ `
+
+export const getTransactionQuery = /* GraphQL */ `
   query GetTransaction($id: ID!) {
     getTransaction(id: $id) {
       id
       companyId
       userId
       price
+      units
       createdAt
       updatedAt
     }
   }
 `;
-export const listTransactions = /* GraphQL */ `
-  query ListTransactions(
-    $filter: ModelTransactionFilterInput
-    $limit: Int
-    $nextToken: String
+export const listTransactionsByCompanyQuery = /* GraphQL */ `
+  query getTransactions(
+    $id: ID!
+    $gt: String! 
   ) {
-    listTransactions(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        companyId
-        userId
-        price
-        createdAt
-        updatedAt
+    getCompany(id: $id) {
+      id
+      transactions(createdAt: { gt: $gt }) {
+        items {
+          id
+          createdAt
+          units
+          price
+        }
       }
-      nextToken
     }
   }
 `;
-export const getShare = /* GraphQL */ `
+export const listTransactionsByUserQuery = /* GraphQL */ `
+  query ListTransactions(
+    $id: ID!
+  ) {
+    getUser(id: $id) {
+      id
+      transactions(sortDirection: DESC,) {
+        items {
+          companyId
+          id
+          createdAt
+          units
+          price
+        }
+      }
+    }
+  }
+`;
+
+export const getShareQuery = /* GraphQL */ `
   query GetShare($id: ID!) {
     getShare(id: $id) {
       id
@@ -109,7 +130,7 @@ export const getShare = /* GraphQL */ `
     }
   }
 `;
-export const listShares = /* GraphQL */ `
+export const listSharesQuery = /* GraphQL */ `
   query ListShares(
     $filter: ModelShareFilterInput
     $limit: Int
@@ -130,7 +151,8 @@ export const listShares = /* GraphQL */ `
     }
   }
 `;
-export const getCompany = /* GraphQL */ `
+
+export const getCompanyQuery = /* GraphQL */ `
   query GetCompany($id: ID!) {
     getCompany(id: $id) {
       id
@@ -138,37 +160,12 @@ export const getCompany = /* GraphQL */ `
       description
       cardInfo
       phoneNumber
-      transactions {
-        items {
-          id
-          companyId
-          userId
-          price
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      shares {
-        items {
-          id
-          companyId
-          userId
-          units
-          listPrice
-          listUnits
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       preference
       createdAt
-      updatedAt
     }
   }
 `;
-export const listCompanys = /* GraphQL */ `
+export const listCompanysQuery = /* GraphQL */ `
   query ListCompanys(
     $filter: ModelCompanyFilterInput
     $limit: Int

@@ -54,7 +54,8 @@ export const loginWithEmail = (email, password) => {
         dispatch(changeApiStatus(AUTH_LOGIN_REQUESTED));
         Auth.signIn(email, password)
         .then(res => {
-            dispatch(changeApiStatus(AUTH_LOGIN_OK, null, res.attributes.email));
+            console.log(res.attributes);
+            dispatch(changeApiStatus(AUTH_LOGIN_OK, null, { id: res.attributes.sub, email: res.attributes.email }));
         })
         .catch(err => {
             if (err.code == "UserNotFoundException") {

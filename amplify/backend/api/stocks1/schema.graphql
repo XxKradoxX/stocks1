@@ -16,6 +16,7 @@ type Transaction @model
     companyId: ID!
     userId: ID!
     price: Int!
+    units: Int!
     createdAt: AWSDateTime
   }
 
