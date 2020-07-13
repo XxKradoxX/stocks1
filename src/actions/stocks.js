@@ -49,7 +49,7 @@ export const getCompany = ( companyId ) => {
         });
     }
 };
-
+/*
 export const listTransactionsByCompany = ( id, gt, lastTransactionDateString=null ) => {
     console.log("lastTransactionDateString: ", lastTransactionDateString);
     return dispatch => {
@@ -103,6 +103,7 @@ export const listTransactionsByCompany = ( id, gt, lastTransactionDateString=nul
         
     };
 }
+*/
 
 export const listTransactionsByUser = ( userId, companyId ) => {
     console.log(STOCKS_TRANSACTIONS_BY_USER_REQUESTED);
@@ -122,4 +123,3 @@ export const listTransactionsByUser = ( userId, companyId ) => {
         });
     };
 }
-
