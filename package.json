@@ -15,7 +15,7 @@
     "aws-amplify": "^3.0.18",
     "expo": "~37.0.3",
     "formik": "^2.1.4",
-    "moment": "^2.27.0",
+    "moment": "^2.29.4",
     "moment-timezone": "^0.5.31",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
